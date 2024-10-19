@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { NewAccountComponent } from './pages/new-account/new-account.component';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent },
-    { path: 'nova-conta', component: NewAccountComponent },
+    { path: 'login', loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent) },
+    { path: 'nova-conta', loadComponent: () => import('./pages/new-account/new-account.component').then(m => m.NewAccountComponent) },
+    { path: 'recuperar-senha', loadComponent: () => import('./pages/recovery-password/recovery-password.component').then(m => m.RecoveryPasswordComponent) },
+    { path: 'gerenciamento-de-dados', loadComponent: () => import('./pages/data-mangement/data-management.component').then(m => m.DataManagementComponent) },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];

@@ -1,0 +1,99 @@
+<div class="flex flex-col items-center min-h-screen bg-gray-50 p-10">
+    <h2 class="text-4xl font-semibold text-center text-blue-900 mb-8">
+        Gerenciamento de Dados
+    </h2>
+
+    <mat-tab-group class="w-full max-w-4xl mat-elevation-z4">
+        <!-- Aba de Exames -->
+        <mat-tab label="Exames">
+            <form [formGroup]="examForm" class="space-y-6 mt-6">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Pesquisar Exames</mat-label>
+                    <input matInput formControlName="search" placeholder="Digite para filtrar" />
+                </mat-form-field>
+
+                <div class="flex space-x-4">
+                    <mat-form-field appearance="outline" class="flex-grow">
+                        <mat-label>Adicionar Exame</mat-label>
+                        <input matInput formControlName="name" placeholder="Nome do Exame" />
+                    </mat-form-field>
+
+                    <button mat-raised-button color="primary" (click)="addItem(examForm, exams, filteredExams)">
+                        Adicionar
+                    </button>
+                </div>
+
+                <mat-list class="bg-white shadow-md rounded-md">
+                    <mat-list-item *ngFor="let exam of filteredExams" class="flex justify-between">
+                        {{ exam }}
+                        <button mat-icon-button color="warn" (click)="deleteItem(exams, filteredExams, exam)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </form>
+        </mat-tab>
+
+        <!-- Aba de Consultas -->
+        <mat-tab label="Consultas">
+            <form [formGroup]="consultationForm" class="space-y-6 mt-6">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Pesquisar Consultas</mat-label>
+                    <input matInput formControlName="search" placeholder="Digite para filtrar" />
+                </mat-form-field>
+
+                <div class="flex space-x-4">
+                    <mat-form-field appearance="outline" class="flex-grow">
+                        <mat-label>Adicionar Consulta</mat-label>
+                        <input matInput formControlName="name" placeholder="Nome da Consulta" />
+                    </mat-form-field>
+
+                    <button mat-raised-button color="primary"
+                        (click)="addItem(consultationForm, consultations, filteredConsultations)">
+                        Adicionar
+                    </button>
+                </div>
+
+                <mat-list class="bg-white shadow-md rounded-md">
+                    <mat-list-item *ngFor="let consultation of filteredConsultations" class="flex justify-between">
+                        {{ consultation }}
+                        <button mat-icon-button color="warn"
+                            (click)="deleteItem(consultations, filteredConsultations, consultation)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </form>
+        </mat-tab>
+
+        <!-- Aba de Cidades -->
+        <mat-tab label="Cidades">
+            <form [formGroup]="cityForm" class="space-y-6 mt-6">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Pesquisar Cidades</mat-label>
+                    <input matInput formControlName="search" placeholder="Digite para filtrar" />
+                </mat-form-field>
+
+                <div class="flex space-x-4">
+                    <mat-form-field appearance="outline" class="flex-grow">
+                        <mat-label>Adicionar Cidade</mat-label>
+                        <input matInput formControlName="name" placeholder="Nome da Cidade" />
+                    </mat-form-field>
+
+                    <button mat-raised-button color="primary" (click)="addItem(cityForm, cities, filteredCities)">
+                        Adicionar
+                    </button>
+                </div>
+
+                <mat-list class="bg-white shadow-md rounded-md">
+                    <mat-list-item *ngFor="let city of filteredCities" class="flex justify-between">
+                        {{ city }}
+                        <button mat-icon-button color="warn" (click)="deleteItem(cities, filteredCities, city)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </form>
+        </mat-tab>
+    </mat-tab-group>
+</div>
