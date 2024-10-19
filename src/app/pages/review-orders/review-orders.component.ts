@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { OrdersService } from '../../shared/services/orders.service';
 
 
 export interface Solicitation {
@@ -15,12 +16,6 @@ export interface Solicitation {
   tempo: string;
 }
 
-const SOLICITACOES: Solicitation[] = [
-  { id: 1, nome: 'João Silva', protocolo: '#12345', tipo: 'Consulta', conteudo: 'Dermatologista', tempo: '2 horas atrás' },
-  { id: 2, nome: 'Maria Santos', protocolo: '#67890', tipo: 'Exame', conteudo: 'Raio-X', tempo: '1 dia atrás' },
-  { id: 3, nome: 'Carlos Mendes', protocolo: '#54321', tipo: 'Transporte', conteudo: 'Hospital - Ida e Volta', tempo: '30 minutos atrás' }
-];
-
 @Component({
   selector: 'app-review-orders',
   standalone: true,
@@ -28,9 +23,17 @@ const SOLICITACOES: Solicitation[] = [
   templateUrl: './review-orders.component.html',
   styleUrls: ['./review-orders.component.scss']
 })
-export class ReviewOrdersComponent {
+export class ReviewOrdersComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'protocolo', 'tipo', 'conteudo', 'tempo', 'acoes'];
-  dataSource = new MatTableDataSource(SOLICITACOES);
+  dataSource = new MatTableDataSource<Solicitation>([]);
+
+  constructor(private ordersService: OrdersService) { }
+
+  ngOnInit(): void {
+    this.ordersService.getSolicitacoes().subscribe((solicitacoes: any[]) => {
+      this.dataSource.data = solicitacoes;
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -39,9 +42,11 @@ export class ReviewOrdersComponent {
 
   aprovarSolicitacao(solicitacao: Solicitation) {
     alert(`Solicitação aprovada: ${solicitacao.nome} - Protocolo ${solicitacao.protocolo}`);
+    // Adicione lógica de aprovação aqui, como chamar um serviço de backend
   }
 
   negarSolicitacao(solicitacao: Solicitation) {
     alert(`Solicitação negada: ${solicitacao.nome} - Protocolo ${solicitacao.protocolo}`);
+    // Adicione lógica de negação aqui, como chamar um serviço de backend
   }
 }
