@@ -1,7 +1,7 @@
 <div class="min-h-screen bg-white">
     <!-- Cabeçalho -->
     <div class="bg-blue-600 text-white flex justify-between items-center p-4">
-        <h6 class="text-xl font-bold">App Saúde</h6>
+        <h6 class="text-2xl font-bold">App Saúde</h6>
     </div>
 
     <!-- Aviso -->
@@ -10,28 +10,94 @@
     </div>
 
     <!-- Botões de Ação -->
-    <div class="flex justify-center items-center mt-16">
+    <div *ngIf="!activeAction && !protocolo" class="flex justify-center items-center mt-16">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3 mb-16">
-            <button mat-fab extended color="primary" style="height: 180px; width: 250px;">
+            <button mat-fab extended color="primary" style="height: 180px; width: 250px;"
+                (click)="showDropdown('consultas')">
                 <div class="grid">
                     <mat-icon fontIcon="calendar_month" class="material-symbols-outlined"></mat-icon>
                     <span class="mt-4 text-2xl font-semibold">Consultas</span>
                 </div>
             </button>
 
-            <button mat-fab extended color="primary" style="height: 180px; width: 250px;">
+            <button mat-fab extended color="primary" style="height: 180px; width: 250px;"
+                (click)="showDropdown('exames')">
                 <div class="grid">
                     <mat-icon fontIcon="description" class="material-symbols-outlined"></mat-icon>
                     <span class="mt-4 text-2xl font-semibold">Exames</span>
                 </div>
             </button>
 
-            <button mat-fab extended color="primary" style="height: 180px; width: 250px;">
+            <button mat-fab extended color="primary" style="height: 180px; width: 250px;"
+                (click)="showDropdown('transporte')">
                 <div class="grid">
                     <mat-icon fontIcon="local_shipping" class="material-symbols-outlined"></mat-icon>
                     <span class="mt-4 text-2xl font-semibold">Transporte</span>
                 </div>
             </button>
         </div>
+    </div>
+
+    <!-- Mensagem de Sucesso -->
+    <div *ngIf="protocolo" class="flex flex-col items-center mt-16">
+        <p class="text-2xl font-semibold text-green-600">
+            Ação confirmada com sucesso! Seu protocolo é: {{ protocolo }}
+        </p>
+        <button mat-button color="primary" class="mt-4" (click)="resetView()">Voltar</button>
+    </div>
+
+    <!-- Dropdown Consultas -->
+    <div *ngIf="activeAction === 'consultas' && !protocolo" class="flex flex-col items-center mt-16 space-y-4">
+        <button mat-button color="accent" (click)="resetView()">Voltar</button>
+
+        <mat-form-field appearance="fill" class="w-64">
+            <mat-label>Selecione a especialidade</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let option of ['Cardiologia', 'Ortopedia', 'Odontologia']" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="confirmar()">Confirmar</button>
+    </div>
+
+    <!-- Dropdown Exames -->
+    <div *ngIf="activeAction === 'exames' && !protocolo" class="flex flex-col items-center mt-16 space-y-4">
+        <button mat-button color="accent" (click)="resetView()">Voltar</button>
+
+        <mat-form-field appearance="fill" class="w-64">
+            <mat-label>Selecione o tipo de exame</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let option of ['Sangue', 'Urina', 'Imagem']" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="confirmar()">Confirmar</button>
+    </div>
+
+    <!-- Dropdown Transporte -->
+    <div *ngIf="activeAction === 'transporte' && !protocolo" class="flex flex-col items-center mt-16 space-y-4">
+        <button mat-button color="accent" (click)="resetView()">Voltar</button>
+
+        <mat-form-field appearance="fill" class="w-64">
+            <mat-label>Selecione o tipo de transporte</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let option of ['Ambulância', 'Táxi', 'Ônibus']" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-64">
+            <mat-label>Tipo de Viagem</mat-label>
+            <mat-select>
+                <mat-option value="ida-e-volta">Ida e Volta</mat-option>
+                <mat-option value="somente-ida">Somente Ida</mat-option>
+                <mat-option value="somente-volta">Somente Volta</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" (click)="confirmar()">Confirmar</button>
     </div>
 </div>

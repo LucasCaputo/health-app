@@ -5,7 +5,7 @@ export const routes: Routes = [
     { path: 'nova-conta', loadComponent: () => import('./pages/new-account/new-account.component').then(m => m.NewAccountComponent) },
     { path: 'recuperar-senha', loadComponent: () => import('./pages/recovery-password/recovery-password.component').then(m => m.RecoveryPasswordComponent) },
     { path: 'gerenciamento-de-dados', loadComponent: () => import('./pages/data-mangement/data-management.component').then(m => m.DataManagementComponent) },
-    { path: 'solicitações', loadComponent: () => import('./pages/order/order.component').then(m => m.OrderComponent) },
+    { path: 'pedido', loadComponent: () => import('./pages/order/order.component').then(m => m.OrderComponent) },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];
