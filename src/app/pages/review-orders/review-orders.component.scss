@@ -1,0 +1,35 @@
+.table-container {
+    overflow-x: auto;
+    /* Habilita scroll horizontal */
+    -webkit-overflow-scrolling: touch;
+    /* Suaviza o scroll em dispositivos móveis */
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+    min-width: 800px;
+    /* Garante que a tabela tenha um tamanho mínimo para o scroll */
+}
+
+th {
+    background-color: #1976d2;
+    color: white;
+    font-weight: bold;
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+td {
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+button {
+    text-transform: none;
+}
+
+.mat-form-field {
+    margin-right: 16px;
+}

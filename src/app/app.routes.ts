@@ -6,6 +6,7 @@ export const routes: Routes = [
     { path: 'recuperar-senha', loadComponent: () => import('./pages/recovery-password/recovery-password.component').then(m => m.RecoveryPasswordComponent) },
     { path: 'gerenciamento-de-dados', loadComponent: () => import('./pages/data-mangement/data-management.component').then(m => m.DataManagementComponent) },
     { path: 'pedido', loadComponent: () => import('./pages/order/order.component').then(m => m.OrderComponent) },
+    { path: 'revisar-pedidos', loadComponent: () => import('./pages/review-orders/review-orders.component').then(m => m.ReviewOrdersComponent) },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];
