@@ -18,15 +18,15 @@
                         <input matInput formControlName="name" placeholder="Nome do Exame" />
                     </mat-form-field>
 
-                    <button mat-raised-button color="primary" (click)="addItem(examForm, exams, filteredExams)">
+                    <button mat-raised-button color="primary" (click)="addItem(examForm, filteredExams$, 'EXAME')">
                         Adicionar
                     </button>
                 </div>
 
                 <mat-list class="bg-white shadow-md rounded-md">
-                    <mat-list-item *ngFor="let exam of filteredExams" class="flex justify-between">
-                        {{ exam }}
-                        <button mat-icon-button color="warn" (click)="deleteItem(exams, filteredExams, exam)">
+                    <mat-list-item *ngFor="let exam of filteredExams$ | async" class="flex justify-between">
+                        {{ exam.nome }}
+                        <button mat-icon-button color="warn" (click)="deleteItem(exam, filteredExams$, 'EXAME')">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </mat-list-item>
@@ -49,16 +49,17 @@
                     </mat-form-field>
 
                     <button mat-raised-button color="primary"
-                        (click)="addItem(consultationForm, consultations, filteredConsultations)">
+                        (click)="addItem(consultationForm, filteredConsultations$, 'CONSULTA')">
                         Adicionar
                     </button>
                 </div>
 
                 <mat-list class="bg-white shadow-md rounded-md">
-                    <mat-list-item *ngFor="let consultation of filteredConsultations" class="flex justify-between">
-                        {{ consultation }}
+                    <mat-list-item *ngFor="let consultation of filteredConsultations$ | async"
+                        class="flex justify-between">
+                        {{ consultation.nome }}
                         <button mat-icon-button color="warn"
-                            (click)="deleteItem(consultations, filteredConsultations, consultation)">
+                            (click)="deleteItem(consultation, filteredConsultations$, 'CONSULTA')">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </mat-list-item>
@@ -77,18 +78,18 @@
                 <div class="flex space-x-4">
                     <mat-form-field appearance="fill" class="flex-grow">
                         <mat-label>Adicionar Transporte</mat-label>
-                        <input matInput formControlName="name" placeholder="Nome da Transporte" />
+                        <input matInput formControlName="name" placeholder="Nome do Transporte" />
                     </mat-form-field>
 
-                    <button mat-raised-button color="primary" (click)="addItem(cityForm, cities, filteredCities)">
+                    <button mat-raised-button color="primary" (click)="addItem(cityForm, filteredCities$, 'CIDADE')">
                         Adicionar
                     </button>
                 </div>
 
                 <mat-list class="bg-white shadow-md rounded-md">
-                    <mat-list-item *ngFor="let city of filteredCities" class="flex justify-between">
-                        {{ city }}
-                        <button mat-icon-button color="warn" (click)="deleteItem(cities, filteredCities, city)">
+                    <mat-list-item *ngFor="let city of filteredCities$ | async" class="flex justify-between">
+                        {{ city.nome }}
+                        <button mat-icon-button color="warn" (click)="deleteItem(city, filteredCities$, 'CIDADE')">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </mat-list-item>
