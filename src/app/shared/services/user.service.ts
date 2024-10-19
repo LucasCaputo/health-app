@@ -2,34 +2,29 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_URL } from './contants/api-url.contant';
-
-interface ApiResponse {
-  // Define the structure of the API response here
-  // For example, if the response contains a token, you can define it like this:
-  token: string;
-  // Add other properties as needed
-}
+import { NewUserInterface } from './interfaces/new-user.interface';
+import { UserInterface } from './interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = API_URL// Replace with your API URL
+  private apiUrl = API_URL
 
   constructor(private http: HttpClient) { }
 
-  public login(username: string, password: string): Observable<ApiResponse> {
+  public login(username: string, password: string): Observable<UserInterface> {
     // Make API call to login endpoint
-    return this.http.post<ApiResponse>(`${this.apiUrl}/login`, { username, password });
+    return this.http.post<UserInterface>(`${this.apiUrl}/auth/login`, { username, password });
   }
 
-  public createAccount(username: string, password: string, email: string): Observable<ApiResponse> {
+  public createAccount(nomeCompleto: string, username: string, email: string, cpf: string, dataNascimento: string, password: string): Observable<NewUserInterface> {
     // Make API call to create account endpoint
-    return this.http.post<ApiResponse>(`${this.apiUrl}/new-account`, { username, password, email });
+    return this.http.post<NewUserInterface>(`${this.apiUrl}/auth/register`, { username, password, email, nomeCompleto, cpf, dataNascimento });
   }
 
-  public recoverPassword(email: string): Observable<ApiResponse> {
+  public recoverPassword(email: string): Observable<any> {
     // Make API call to recover password endpoint
-    return this.http.post<ApiResponse>(`${this.apiUrl}/recovery-password`, { email });
+    return this.http.post<any>(`${this.apiUrl}/recovery-password`, { email });
   }
 }

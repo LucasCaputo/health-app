@@ -36,7 +36,10 @@ export class LoginComponent {
       const password = this.loginForm.value.password;
       console.log('Username: ' + username + ' Password: ' + password);
 
-      this.userService.login(username, password).subscribe();
+      this.userService.login(username, password).subscribe({
+        next: (response) => console.log('Logged successfully:', response),
+        error: (error) => console.log('Error login account:', error),
+      });
     }
   }
 }
