@@ -7,6 +7,7 @@ export const routes: Routes = [
     { path: 'gerenciamento-de-dados', loadComponent: () => import('./pages/data-mangement/data-management.component').then(m => m.DataManagementComponent) },
     { path: 'pedido', loadComponent: () => import('./pages/order/order.component').then(m => m.OrderComponent) },
     { path: 'revisar-pedidos', loadComponent: () => import('./pages/review-orders/review-orders.component').then(m => m.ReviewOrdersComponent) },
+    { path: 'audit', loadComponent: () => import('./pages/audit/audit.component').then(m => m.AuditComponent) },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];
