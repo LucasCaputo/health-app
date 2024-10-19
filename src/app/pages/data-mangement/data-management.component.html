@@ -66,18 +66,18 @@
             </form>
         </mat-tab>
 
-        <!-- Aba de Cidades -->
-        <mat-tab label="Cidades">
+        <!-- Aba de Transporte -->
+        <mat-tab label="Transporte">
             <form [formGroup]="cityForm" class="space-y-6 mt-6">
                 <mat-form-field appearance="outline" class="w-full">
-                    <mat-label>Pesquisar Cidades</mat-label>
+                    <mat-label>Pesquisar Transporte</mat-label>
                     <input matInput formControlName="search" placeholder="Digite para filtrar" />
                 </mat-form-field>
 
                 <div class="flex space-x-4">
                     <mat-form-field appearance="outline" class="flex-grow">
-                        <mat-label>Adicionar Cidade</mat-label>
-                        <input matInput formControlName="name" placeholder="Nome da Cidade" />
+                        <mat-label>Adicionar Transporte</mat-label>
+                        <input matInput formControlName="name" placeholder="Nome da Transporte" />
                     </mat-form-field>
 
                     <button mat-raised-button color="primary" (click)="addItem(cityForm, cities, filteredCities)">
