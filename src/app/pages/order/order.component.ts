@@ -1,9 +1,13 @@
-import { NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { first, Observable } from 'rxjs';
+import { typeInterfaceResponse } from '../../shared/interfaces/types.interface';
+import { OrdersService } from '../../shared/services/orders.service';
+import { TypeService } from '../../shared/services/type.service';
 
 @Component({
   selector: 'app-order',
@@ -11,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
   imports: [
     NgIf,
     NgFor,
+    AsyncPipe,
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -23,6 +28,12 @@ export class OrderComponent {
   activeAction: 'consultas' | 'exames' | 'transporte' | null = null;
   protocolo: string | null = null;
 
+  consultas$: Observable<typeInterfaceResponse[]> = this.typeService.getTypes('CONSULTA');
+  exames$: Observable<typeInterfaceResponse[]> = this.typeService.getTypes('EXAME');
+  transportes$: Observable<typeInterfaceResponse[]> = this.typeService.getTypes('TRANSPORTE');
+
+  constructor(private typeService: TypeService, private orderService: OrdersService) { }
+
   showDropdown(action: 'consultas' | 'exames' | 'transporte') {
     this.activeAction = action;
     this.protocolo = null; // Limpar protocolo ao mudar de ação
@@ -34,10 +45,24 @@ export class OrderComponent {
   }
 
   confirmar() {
-    this.protocolo = this.gerarProtocolo();
+
+    if (this.activeAction === 'consultas') {
+      return this.orderService.createOrder(1).pipe(first()).subscribe(response => {
+        this.protocolo = response.protocolo;
+      });
+    }
+    if (this.activeAction === 'exames') {
+      return this.orderService.createOrder(2).pipe(first()).subscribe(response => {
+        this.protocolo = response.protocolo;
+      });
+    }
+    if (this.activeAction === 'transporte') {
+      return this.orderService.createOrder(3).pipe(first()).subscribe(response => {
+        this.protocolo = response.protocolo;
+      });
+    }
+
+    return null; // Add a default return statement
   }
 
-  gerarProtocolo(): string {
-    return Math.floor(Math.random() * 1000000).toString().padStart(6, '0'); // Gera protocolo de 6 dígitos
-  }
 }

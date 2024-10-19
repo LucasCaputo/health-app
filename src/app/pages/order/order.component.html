@@ -53,8 +53,8 @@
         <mat-form-field appearance="fill" class="w-64">
             <mat-label>Selecione a especialidade</mat-label>
             <mat-select>
-                <mat-option *ngFor="let option of ['Cardiologia', 'Ortopedia', 'Odontologia']" [value]="option">
-                    {{ option }}
+                <mat-option *ngFor="let consulta of consultas$ | async" [value]="consulta.nome">
+                    {{ consulta.nome }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -68,8 +68,8 @@
         <mat-form-field appearance="fill" class="w-64">
             <mat-label>Selecione o tipo de exame</mat-label>
             <mat-select>
-                <mat-option *ngFor="let option of ['Sangue', 'Urina', 'Imagem']" [value]="option">
-                    {{ option }}
+                <mat-option *ngFor="let exame of exames$ | async" [value]="exame.nome">
+                    {{ exame.nome }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -83,8 +83,8 @@
         <mat-form-field appearance="fill" class="w-64">
             <mat-label>Selecione o tipo de transporte</mat-label>
             <mat-select>
-                <mat-option *ngFor="let option of ['Ambulância', 'Táxi', 'Ônibus']" [value]="option">
-                    {{ option }}
+                <mat-option *ngFor="let transporte of transportes$ | async" [value]="transporte.nome">
+                    {{ transporte.nome }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
