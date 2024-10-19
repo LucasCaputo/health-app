@@ -4,7 +4,7 @@ import { NewAccountComponent } from './pages/new-account/new-account.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'new-account', component: NewAccountComponent },
+    { path: 'nova-conta', component: NewAccountComponent },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];

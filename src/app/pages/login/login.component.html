@@ -1,1 +1,44 @@
-<p>login works!</p>
+<div class="flex items-center justify-center min-h-screen bg-blue-100">
+    <mat-card class="bg-white shadow-lg rounded-xl p-10 w-full max-w-md">
+        <h2 class="text-3xl font-semibold text-center text-blue-800 mb-6">
+            Bem-vindo
+        </h2>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label class="text-blue-800">Usuário</mat-label>
+                <input matInput formControlName="username" required
+                    class="border border-blue-300 rounded-md p-2 w-full" />
+                <mat-error *ngIf="loginForm.get('username')?.invalid">
+                    O usuário é obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label class="text-blue-800">Senha</mat-label>
+                <input matInput type="password" formControlName="password" required
+                    class="border border-blue-300 rounded-md p-2 w-full" />
+                <mat-error *ngIf="loginForm.get('password')?.invalid">
+                    A senha é obrigatória
+                </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
+                Entrar
+            </button>
+        </form>
+
+        <div class="text-center mt-4">
+            <a routerLink="/forgot-password"
+                class="text-blue-600 hover:text-blue-800 text-sm transition-colors cursor-pointer">
+                Esqueceu sua senha?
+            </a>
+        </div>
+
+        <button mat-flat-button color="primary" routerLink="/nova-conta"
+            class="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-md transition-colors">
+            Cadastrar Nova Conta
+        </button>
+    </mat-card>
+</div>
