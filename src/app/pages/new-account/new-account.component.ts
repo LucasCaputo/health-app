@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 import { UserService } from '../../shared/services/user.service';
 
@@ -35,7 +35,7 @@ import { UserService } from '../../shared/services/user.service';
 export class NewAccountComponent {
   newAccountForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private dateAdapter: DateAdapter<any>) { // Add dateAdapter in the constructor
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { // Add dateAdapter in the constructor
     this.newAccountForm = this.fb.group({
       nomeCompleto: ['', [Validators.required, Validators.minLength(3)]],
       username: ['', [Validators.required]],
@@ -61,8 +61,15 @@ export class NewAccountComponent {
         formattedDataNascimento,
         formData.password,
       ).subscribe({
-        next: (response) => console.log('Account created successfully:', response),
-        error: (error) => console.log('Error creating account:', error),
+        next: (response) => {
+          console.log('Account created successfully:', response);
+          window.alert('Account created successfully');
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          console.log('Error creating account:', error);
+          window.alert('Error creating account');
+        },
       });
     } else {
       console.log('Formulário inválido');

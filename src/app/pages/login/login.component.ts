@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../shared/services/user.service';
 
 @Component({
@@ -23,7 +23,7 @@ import { UserService } from '../../shared/services/user.service';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
     this.loginForm = new FormGroup({
       username: new FormControl(''),
       password: new FormControl(''),
@@ -37,8 +37,15 @@ export class LoginComponent {
       console.log('Username: ' + username + ' Password: ' + password);
 
       this.userService.login(username, password).subscribe({
-        next: (response) => console.log('Logged successfully:', response),
-        error: (error) => console.log('Error login account:', error),
+        next: (response) => {
+          console.log('Logged successfully:', response)
+          window.alert('Logged successfully');
+          this.router.navigate(['/home']);  // Redirect to home page
+        },
+        error: (error) => {
+          window.alert('Error login account');
+          console.log('Error login account:', error)
+        },
       });
     }
   }
