@@ -44,6 +44,6 @@ export class TypeService {
   }
 
   public createType(type: typeInterfaceRequest): Observable<typeInterfaceRequest> {
-    return this.http.post<typeInterfaceRequest>(`${this.apiUrl}/tipos`, type);
+    return this.http.post<typeInterfaceRequest>(`${this.apiUrl}/api/tipos`, type);
   }
 }

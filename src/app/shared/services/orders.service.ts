@@ -124,13 +124,13 @@ export class OrdersService {
         }
       }
     ]);
-    // return this.http.get<ReviewOrderInterfaceResponse[]>(`${this.apiUrl}/solicitacoes`);
+    // return this.http.get<ReviewOrderInterfaceResponse[]>(`${this.apiUrl}/api/solicitacoes`);
   }
 
   approveOrDenySolicitacoes(status: string, solicitacoes: ReviewOrderInterfaceResponse[]): Observable<ReviewOrderInterfaceResponse[]> {
     // Make API call to approve or deny solicitacoes with the given status
     // For example:
-    // return this.http.put<ReviewOrderInterfaceResponse[]>(`${this.apiUrl}/solicitacoes/status/${status}`, solicitacoes);
+    // return this.http.put<ReviewOrderInterfaceResponse[]>(`${this.apiUrl}/api/solicitacoes/status/${status}`, solicitacoes);
     return of(solicitacoes); // Placeholder return statement
   }
 }

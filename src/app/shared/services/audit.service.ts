@@ -39,6 +39,6 @@ export class AuditService {
         }
       ]
     )
-    // return this.http.get<LogEntry[]>(this.apiUrl + '/logs');
+    // return this.http.get<LogEntry[]>(this.apiUrl + '/api/logs');
   }
 }
