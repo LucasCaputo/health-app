@@ -53,12 +53,13 @@
 
         <mat-form-field appearance="fill" class="w-64">
             <mat-label>Selecione a especialidade</mat-label>
-            <mat-select>
-                <mat-option *ngFor="let consulta of consultas$ | async" [value]="consulta.nome">
+            <mat-select [formControl]="selectedItemControl">
+                <mat-option *ngFor="let consulta of consultas$ | async" [value]="consulta.id">
                     {{ consulta.nome }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
+
         <button mat-flat-button color="primary" (click)="confirmar()">Confirmar</button>
     </div>
 
@@ -68,12 +69,13 @@
 
         <mat-form-field appearance="fill" class="w-64">
             <mat-label>Selecione o tipo de exame</mat-label>
-            <mat-select>
-                <mat-option *ngFor="let exame of exames$ | async" [value]="exame.nome">
+            <mat-select [formControl]="selectedItemControl">
+                <mat-option *ngFor="let exame of exames$ | async" [value]="exame.id">
                     {{ exame.nome }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
+
         <button mat-flat-button color="primary" (click)="confirmar()">Confirmar</button>
     </div>
 
@@ -83,8 +85,8 @@
 
         <mat-form-field appearance="fill" class="w-64">
             <mat-label>Selecione o tipo de transporte</mat-label>
-            <mat-select>
-                <mat-option *ngFor="let transporte of transportes$ | async" [value]="transporte.nome">
+            <mat-select [formControl]="selectedItemControl">
+                <mat-option *ngFor="let transporte of transportes$ | async" [value]="transporte.id">
                     {{ transporte.nome }}
                 </mat-option>
             </mat-select>
@@ -92,7 +94,7 @@
 
         <mat-form-field appearance="fill" class="w-64">
             <mat-label>Tipo de Viagem</mat-label>
-            <mat-select>
+            <mat-select [formControl]="tipoViagemControl">
                 <mat-option value="ida-e-volta">Ida e Volta</mat-option>
                 <mat-option value="somente-ida">Somente Ida</mat-option>
                 <mat-option value="somente-volta">Somente Volta</mat-option>

@@ -1,10 +1,11 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { first, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { typeInterfaceResponse } from '../../shared/interfaces/types.interface';
 import { OrdersService } from '../../shared/services/orders.service';
 import { TypeService } from '../../shared/services/type.service';
@@ -14,9 +15,8 @@ import { UserService } from '../../shared/services/user.service';
   selector: 'app-order',
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
-    AsyncPipe,
+    CommonModule,
+    ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -29,11 +29,18 @@ export class OrderComponent {
   activeAction: 'consultas' | 'exames' | 'transporte' | null = null;
   protocolo: string | null = null;
 
+  selectedItemControl = new FormControl(); // Controlador do mat-select
+  tipoViagemControl = new FormControl(); // Controlador do mat-select
+
   consultas$: Observable<typeInterfaceResponse[]> = this.typeService.getTypes('CONSULTA');
   exames$: Observable<typeInterfaceResponse[]> = this.typeService.getTypes('EXAME');
   transportes$: Observable<typeInterfaceResponse[]> = this.typeService.getTypes('TRANSPORTE');
 
-  constructor(private typeService: TypeService, private orderService: OrdersService, public userService: UserService) { }
+  constructor(
+    private typeService: TypeService,
+    private orderService: OrdersService,
+    public userService: UserService
+  ) { }
 
   showDropdown(action: 'consultas' | 'exames' | 'transporte') {
     this.activeAction = action;
@@ -43,27 +50,18 @@ export class OrderComponent {
   resetView() {
     this.activeAction = null;
     this.protocolo = null;
+    this.selectedItemControl.reset();
   }
 
   confirmar() {
+    const selectedId = this.selectedItemControl.value;
 
-    if (this.activeAction === 'consultas') {
-      return this.orderService.createOrder(1).pipe(first()).subscribe(response => {
+    if (selectedId !== null) {
+      this.orderService.createOrder(selectedId).subscribe((response) => {
         this.protocolo = response.protocolo;
       });
+    } else {
+      alert('Selecione um item antes de confirmar!');
     }
-    if (this.activeAction === 'exames') {
-      return this.orderService.createOrder(2).pipe(first()).subscribe(response => {
-        this.protocolo = response.protocolo;
-      });
-    }
-    if (this.activeAction === 'transporte') {
-      return this.orderService.createOrder(3).pipe(first()).subscribe(response => {
-        this.protocolo = response.protocolo;
-      });
-    }
-
-    return null; // Add a default return statement
   }
-
 }
