@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
+import { first } from 'rxjs';
 import { ReviewOrderInterfaceResponse } from '../../shared/interfaces/review-orders.interface';
 import { OrdersService } from '../../shared/services/orders.service';
 import { UserService } from '../../shared/services/user.service';
@@ -25,7 +26,12 @@ export class ReviewOrdersComponent implements OnInit {
   constructor(private ordersService: OrdersService, public userService: UserService) { }
 
   ngOnInit(): void {
-    this.ordersService.getSolicitacoes().subscribe((solicitacoes: any[]) => {
+    this.loadSolicitacoes();
+  }
+
+  // Método para buscar as solicitações
+  loadSolicitacoes() {
+    this.ordersService.getSolicitacoes().pipe(first()).subscribe((solicitacoes: ReviewOrderInterfaceResponse[]) => {
       this.dataSource.data = solicitacoes;
     });
   }
@@ -36,10 +42,14 @@ export class ReviewOrdersComponent implements OnInit {
   }
 
   aprovarSolicitacao(id: number, observacao: string) {
-    this.ordersService.approveSolicitacoes(id, observacao).subscribe();
+    this.ordersService.approveSolicitacoes(id, observacao).subscribe(() => {
+      this.loadSolicitacoes(); // Recarrega a lista após aprovar
+    });
   }
 
   negarSolicitacao(id: number, observacao: string) {
-    this.ordersService.approveSolicitacoes(id, observacao).subscribe();
+    this.ordersService.denySolicitacoes(id, observacao).subscribe(() => {
+      this.loadSolicitacoes(); // Recarrega a lista após negar
+    });
   }
 }
