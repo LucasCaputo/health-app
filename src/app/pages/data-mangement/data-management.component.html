@@ -37,7 +37,7 @@
                     <mat-list class="bg-white shadow-md rounded-md">
                         <mat-list-item *ngFor="let exam of filteredExams$ | async" class="flex justify-between">
                             {{ exam.nome }}
-                            <button mat-icon-button color="warn" (click)="deleteItem(exam, filteredExams$, 'EXAME')">
+                            <button mat-icon-button color="warn" (click)="disableItem(exam, filteredExams$)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </mat-list-item>
@@ -70,7 +70,7 @@
                             class="flex justify-between">
                             {{ consultation.nome }}
                             <button mat-icon-button color="warn"
-                                (click)="deleteItem(consultation, filteredConsultations$, 'CONSULTA')">
+                                (click)="disableItem(consultation, filteredConsultations$)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </mat-list-item>
@@ -101,7 +101,7 @@
                     <mat-list class="bg-white shadow-md rounded-md">
                         <mat-list-item *ngFor="let city of filteredCities$ | async" class="flex justify-between">
                             {{ city.nome }}
-                            <button mat-icon-button color="warn" (click)="deleteItem(city, filteredCities$, 'CIDADE')">
+                            <button mat-icon-button color="warn" (click)="disableItem(city, filteredCities$)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </mat-list-item>

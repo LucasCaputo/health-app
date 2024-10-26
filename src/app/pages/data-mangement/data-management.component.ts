@@ -39,9 +39,9 @@ export class DataManagementComponent implements OnInit {
   consultationForm: FormGroup;
   cityForm: FormGroup;
 
-  consultations: any[] = []; // Cache local das consultas
-  exams: any[] = []; // Cache local dos exames
-  cities: any[] = []; // Cache local das cidades
+  consultations: any[] = [];
+  exams: any[] = [];
+  cities: any[] = [];
 
   filteredConsultations$ = new BehaviorSubject<any[]>([]);
   filteredExams$ = new BehaviorSubject<any[]>([]);
@@ -51,7 +51,7 @@ export class DataManagementComponent implements OnInit {
     private fb: FormBuilder,
     private dialog: MatDialog,
     private typeService: TypeService,
-    public userService: UserService,
+    public userService: UserService
   ) {
     this.examForm = this.fb.group({
       name: ['', Validators.required],
@@ -72,20 +72,19 @@ export class DataManagementComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Carregar os dados uma vez e armazenar no cache
     this.typeService.getTypes('CONSULTA').subscribe((consultations) => {
       this.consultations = consultations;
-      this.filteredConsultations$.next([...consultations]);
+      this.filteredConsultations$.next(this.filterActive(consultations));
     });
 
     this.typeService.getTypes('EXAME').subscribe((exams) => {
       this.exams = exams;
-      this.filteredExams$.next([...exams]);
+      this.filteredExams$.next(this.filterActive(exams));
     });
 
     this.typeService.getTypes('TRANSPORTE').subscribe((cities) => {
       this.cities = cities;
-      this.filteredCities$.next([...cities]);
+      this.filteredCities$.next(this.filterActive(cities));
     });
   }
 
@@ -100,7 +99,7 @@ export class DataManagementComponent implements OnInit {
 
     this.openConfirmationDialog(`Deseja adicionar "${name}"?`).subscribe((confirmed) => {
       if (confirmed) {
-        const newItem = { nome: name };
+        const newItem = { nome: name, ativo: true };
         const updatedList = [...filtered$.getValue(), newItem];
         filtered$.next(updatedList);
 
@@ -110,22 +109,27 @@ export class DataManagementComponent implements OnInit {
     });
   }
 
-  deleteItem(item: any, filtered$: BehaviorSubject<any[]>, apiType: string) {
-    this.openConfirmationDialog(`Deseja desativar "${item.nome}"?`).subscribe((confirmed) => {
+  disableItem(item: any, filtered$: BehaviorSubject<any[]>) {
+    this.openConfirmationDialog(`Deseja desabilitar "${item.nome}"?`).subscribe((confirmed) => {
       if (confirmed) {
-        const updatedList = filtered$.getValue().filter((i) => i.nome !== item.nome);
+        item.ativo = false;
+        const updatedList = this.filterActive(filtered$.getValue());
         filtered$.next(updatedList);
 
-        // Opcional: Chame a API para excluir o item, se necessário
-        // this.typeService.deleteType(apiType, item.id).subscribe();
+        // Opcional: Chame a API para atualizar o estado do item
+        this.typeService.updateType(item).subscribe();
       }
     });
   }
 
+  filterActive(list: any[]) {
+    return list.filter((item) => item.ativo);
+  }
+
   filterItems(searchTerm: string, originalList: any[], filtered$: BehaviorSubject<any[]>) {
     searchTerm = searchTerm.toLowerCase();
-    const filteredList = originalList.filter((item) =>
-      item.nome.toLowerCase().includes(searchTerm)
+    const filteredList = originalList.filter(
+      (item) => item.ativo && item.nome.toLowerCase().includes(searchTerm)
     );
     filtered$.next(filteredList);
   }

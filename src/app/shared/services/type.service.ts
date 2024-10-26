@@ -19,4 +19,8 @@ export class TypeService {
   public createType(type: typeInterfaceRequest): Observable<typeInterfaceRequest> {
     return this.http.post<typeInterfaceRequest>(`${this.apiUrl}/api/tipos`, type);
   }
+
+  public updateType(item: any): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/api/tipos/${item.id}/status`, item);
+  }
 }
