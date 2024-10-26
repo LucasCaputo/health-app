@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { API_URL } from '../contants/api-url.contant';
 import { NewUserInterface } from '../interfaces/new-user.interface';
@@ -11,7 +12,7 @@ import { UserInterface } from '../interfaces/user.interface';
 export class UserService {
   private apiUrl = API_URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   public login(username: string, password: string): Observable<UserInterface> {
     // Make API call to login endpoint
@@ -26,5 +27,13 @@ export class UserService {
   public recoverPassword(email: string): Observable<any> {
     // Make API call to recover password endpoint
     return this.http.post<any>(`${this.apiUrl}/recovery-password`, { email });
+  }
+
+  public logout(): void {
+    // Clear session storage
+    sessionStorage.clear();
+
+    // Navigate to login page
+    this.router.navigate(['/login']);
   }
 }

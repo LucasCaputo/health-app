@@ -2,6 +2,12 @@
     <!-- Cabeçalho -->
     <div class="bg-blue-600 text-white p-4 flex justify-between items-center">
         <h6 class="text-2xl font-bold">App Saúde</h6>
+        <div>
+            <button mat--raised-button color="warm" class="mr-8">Revisar
+                Pedidos</button>
+            <button mat--raised-button color="warm" [routerLink]="['/gerenciar-dados']">Gerenciar Dados</button>
+        </div>
+        <button mat-raised-button color="primary" (click)="userService.logout()">Sair</button>
     </div>
 
     <h6 class="text-3xl font-semibold text-center">Lista de Solicitações</h6>

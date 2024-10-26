@@ -38,12 +38,17 @@ export class LoginComponent {
 
       this.userService.login(username, password).subscribe({
         next: (response) => {
-          console.log('Logged successfully:', response)
-          window.alert('Logged successfully');
-          this.router.navigate(['/home']);  // Redirect to home page
+          window.sessionStorage.setItem('token', response.token);
+          window.sessionStorage.setItem('role', response.role);
+
+          if (response.role === 'ROLE_SECRETARIA') {
+            this.router.navigate(['/revisar-pedidos']);
+          } else {
+            this.router.navigate(['/pedido']);
+          }
         },
         error: (error) => {
-          window.alert('Error login account');
+          window.alert('Error ao fazer o login verifique seu login e senha e tente novamente');
           console.log('Error login account:', error)
         },
       });

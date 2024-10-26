@@ -8,6 +8,7 @@ import { first, Observable } from 'rxjs';
 import { typeInterfaceResponse } from '../../shared/interfaces/types.interface';
 import { OrdersService } from '../../shared/services/orders.service';
 import { TypeService } from '../../shared/services/type.service';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
   selector: 'app-order',
@@ -32,7 +33,7 @@ export class OrderComponent {
   exames$: Observable<typeInterfaceResponse[]> = this.typeService.getTypes('EXAME');
   transportes$: Observable<typeInterfaceResponse[]> = this.typeService.getTypes('TRANSPORTE');
 
-  constructor(private typeService: TypeService, private orderService: OrdersService) { }
+  constructor(private typeService: TypeService, private orderService: OrdersService, public userService: UserService) { }
 
   showDropdown(action: 'consultas' | 'exames' | 'transporte') {
     this.activeAction = action;

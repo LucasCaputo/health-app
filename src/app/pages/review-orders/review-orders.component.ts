@@ -4,7 +4,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { RouterLink } from '@angular/router';
 import { OrdersService } from '../../shared/services/orders.service';
+import { UserService } from '../../shared/services/user.service';
 
 
 export interface Solicitation {
@@ -19,7 +21,7 @@ export interface Solicitation {
 @Component({
   selector: 'app-review-orders',
   standalone: true,
-  imports: [MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, RouterLink],
   templateUrl: './review-orders.component.html',
   styleUrls: ['./review-orders.component.scss']
 })
@@ -27,7 +29,7 @@ export class ReviewOrdersComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'protocolo', 'tipo', 'conteudo', 'tempo', 'acoes'];
   dataSource = new MatTableDataSource<Solicitation>([]);
 
-  constructor(private ordersService: OrdersService) { }
+  constructor(private ordersService: OrdersService, public userService: UserService) { }
 
   ngOnInit(): void {
     this.ordersService.getSolicitacoes().subscribe((solicitacoes: any[]) => {

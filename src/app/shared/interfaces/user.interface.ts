@@ -1,4 +1,6 @@
 export interface UserInterface {
     token: string;
-    role: string;
+    role: RoleType;
 }
+
+export type RoleType = 'ROLE_SECRETARIA' | 'ROLE_COMUM';
