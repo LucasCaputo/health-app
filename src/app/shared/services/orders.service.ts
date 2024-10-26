@@ -32,10 +32,13 @@ export class OrdersService {
     return this.http.get<ReviewOrderInterfaceResponse[]>(`${this.apiUrl}/api/solicitacoes/status/PENDENTE`);
   }
 
-  approveOrDenySolicitacoes(status: string, solicitacoes: ReviewOrderInterfaceResponse[]): Observable<ReviewOrderInterfaceResponse[]> {
-    // Make API call to approve or deny solicitacoes with the given status
-    // For example:
-    // return this.http.put<ReviewOrderInterfaceResponse[]>(`${this.apiUrl}/api/solicitacoes/status/${status}`, solicitacoes);
-    return of(solicitacoes); // Placeholder return statement
+  approveSolicitacoes(id: number, observacao: string): Observable<ReviewOrderInterfaceResponse[]> {
+    const dataConclusao = new Date().toISOString().split('T')[0];
+    return this.http.post<ReviewOrderInterfaceResponse[]>(`${this.apiUrl}/api/solicitacoes/${id}/aceitar?observacao=${observacao}&dataConclusao=${dataConclusao}`, {});
+  }
+
+  denySolicitacoes(id: number, observacao: string): Observable<ReviewOrderInterfaceResponse[]> {
+    const dataConclusao = new Date().toISOString().split('T')[0];
+    return this.http.post<ReviewOrderInterfaceResponse[]>(`${this.apiUrl}/api/solicitacoes/${id}/negar?observacao=${observacao}&dataConclusao=${dataConclusao}`, {});
   }
 }

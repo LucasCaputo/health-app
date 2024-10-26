@@ -35,13 +35,11 @@ export class ReviewOrdersComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  aprovarSolicitacao(solicitacao: ReviewOrderInterfaceResponse) {
-    alert(`Solicitação aprovada: ${solicitacao.nomeServico} - Protocolo ${solicitacao.protocolo}`);
-    // Adicione lógica de aprovação aqui, como chamar um serviço de backend
+  aprovarSolicitacao(id: number, observacao: string) {
+    this.ordersService.approveSolicitacoes(id, observacao).subscribe();
   }
 
-  negarSolicitacao(solicitacao: ReviewOrderInterfaceResponse) {
-    alert(`Solicitação negada: ${solicitacao.nomeServico} - Protocolo ${solicitacao.protocolo}`);
-    // Adicione lógica de negação aqui, como chamar um serviço de backend
+  negarSolicitacao(id: number, observacao: string) {
+    this.ordersService.approveSolicitacoes(id, observacao).subscribe();
   }
 }

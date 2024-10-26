@@ -72,8 +72,9 @@
             <ng-container matColumnDef="acoes">
                 <th mat-header-cell style="color: black" *matHeaderCellDef class="custom-header">Ações</th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-raised-button color="primary" (click)="aprovarSolicitacao(element)">Aprovar</button>
-                    <button mat-raised-button color="warn" (click)="negarSolicitacao(element)"
+                    <button mat-raised-button color="primary"
+                        (click)="aprovarSolicitacao(element.id, 'Aprovado')">Aprovar</button>
+                    <button mat-raised-button color="warn" (click)="negarSolicitacao(element.id, 'Negado')"
                         class="ml-2">Negar</button>
                 </td>
             </ng-container>
